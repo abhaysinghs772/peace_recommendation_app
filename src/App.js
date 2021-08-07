@@ -1,58 +1,55 @@
 import { useState } from 'react';
 import './App.css';
 
-// const peaceSongsLists = ['a', 'b', 'c']
-// const joySongsList = ['x', 'y', 'z']
-// const energySongsLists = ['d', 'e', 'f']
-
 const bhajans = {
-  peaceSongsLists: [
-    'a',
-    'b',
-    'c'
+  "peace": [
+    'Sri Damodarashtakam',
+    'Narayana Kavacha'
   ],
-  joySongsList: [
-    'x',
-    'y',
-    'z'
+  "joy": [
+    'Sri Ramchandra Kripalu Bhajanan',
+    'Achutam Keshavam'
   ],
-  energySongsLists: [
-    'd',
-    'e',
-    'f'
+  "energy": [
+    'Shri Hari Stotram'
   ]
 }
+let bhajansGenres = Object.keys(bhajans);
+// console.log(bhajansGenres);
 
 function App() {
-  let [songs, setSongs] = useState("");
 
-  function peaceHandeler() {
+  let [songsList, setSongs] = useState("");
 
-    // console.log("peace");
-    let peaceSongs = bhajans.peaceSongsLists;
-    // console.log(peaceSongs);
-    setSongs(peaceSongs);
-    console.log(songs)
+  function clickHandeler(index) {
+    console.log("clicked", index);
+    let userInput = bhajans[bhajansGenres[index]];
+    // console.log(userInput);
+    setSongs(userInput);
+
+    // console.log(songsList);
   }
-
-  function joyHandeler() {
-    console.log("joy");
-  }
-
-  function energyHandeler() {
-    console.log("energy");
-  }
-
+  
   return (
     <div className="App">
-      <h1 className="heading" >My favourite Bhajans</h1>
+      <h1 className="heading" >My favourite Bhajans and Sanskrit Songs</h1>
       <p>listen to my favourite Bhajans. select any catogery below</p>
-      <button className="btn" onClick={() => peaceHandeler()} >peace</button>
-      <button className="btn" onClick={() => joyHandeler()} >joy</button>
-      <button className="btn" onClick={() => energyHandeler()} >energy</button>
+      {
+        bhajansGenres.map((genre, index) => {
+          return (<button className="btn" onClick={() => clickHandeler(index)}>{genre}</button>)
+        })
+      }
       <hr></hr>
       <div>
-
+        <ul style= {{paddingLeft: "5px"}} >
+          {
+            // line 52 stack overflow 
+            // https://stackoverflow.com/questions/62105820/typeerror-songs-map-is-not-a-function
+            songsList && songsList.map((index) => {
+              return (<li className="songsList" >{index}</li>)
+            })
+          }
+        </ul>
       </div>
     </div>
   );
